@@ -13,7 +13,7 @@ fun NavManager(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "Home")
     {
-        composable("Home") { HomeView(navController)  }
+        composable("Home") { HomeView()  }
         composable("Add") { AddView()  }
     }
 

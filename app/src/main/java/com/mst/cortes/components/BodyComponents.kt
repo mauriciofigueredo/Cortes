@@ -21,8 +21,11 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.TextUnit
 
 
 @Composable
@@ -56,26 +59,10 @@ fun FloatButton(onClick: () -> Unit) {
 
 
 @Composable
-fun MainTitle(title: String, color: Color) {
-    Text(text = title, color = color, fontWeight = FontWeight.Bold)
+fun MainTitle(title: String, color: Color, size: TextUnit) {
+    Text(text = title, color = color, fontWeight = FontWeight.Bold, fontSize = size)
 }
 
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun MainTextField(value: String, onValueChange: (String) -> Unit, label: String, keyboardOptions: KeyboardType) {
-//    OutlinedTextField(
-//        value = value,
-//        onValueChange = onValueChange,
-//        label = Text(text = label),
-//        singleLine  = true,
-//        keyboardOptions = keyboardOptions,
-//        modifier = Modifier
-//            .padding(bottom = 15.dp)
-//            .fillMaxWidth()
-//
-//    )
-//
-//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,6 +73,10 @@ fun MainTextField(value: String, onValueChange: (String) -> Unit, label: String,
         label = { Text(text = label) },
         singleLine  = true,
         keyboardOptions = keyboardOptions,
+        textStyle = TextStyle(
+            fontSize = 20.sp,
+            fontFamily = FontFamily.Monospace
+        ),
         modifier = Modifier
             .padding(bottom = 15.dp)
             .fillMaxWidth()
