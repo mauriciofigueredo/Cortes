@@ -1,6 +1,7 @@
 package com.mst.cortes.views
 
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,11 +16,13 @@ import com.mst.cortes.components.MainTitle
 
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,11 +39,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.navigation.NavController
 import com.mst.cortes.components.MainTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView() {
+fun HomeView(navController: NavController) {
     Scaffold(
         topBar = {
                 CenterAlignedTopAppBar(
@@ -51,22 +55,14 @@ fun HomeView() {
                 )
             )
         },
-        floatingActionButton = {
-
-            FloatingActionButton(
-                onClick = { /* Lógica para la acción del botón */ }
-            ) {
-                Icon(Icons.Filled.Add, contentDescription = "Añadir")
-            }
-        },
         content = {
-            HomeContent(it)
+            HomeContent(it, navController)
         }
     )
 }
 
 @Composable
-fun HomeContent(values : PaddingValues){
+fun HomeContent(values : PaddingValues, navController: NavController){
 
     var selectedOption by remember{ mutableStateOf("") }
     val options = listOf<String>("Corte", "Recorte", "Otro")
@@ -110,82 +106,37 @@ fun HomeContent(values : PaddingValues){
         }//fin Radio button
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(horizontal = 30.dp)) {
             MainTextField(
                 value = cuenta,
                 onValueChange = { cuenta = it},
                 label = "Cuenta",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(bottom = 10.dp))
             MainTextField(
-                value = lectura.toString(),
+                value = lectura,
                 onValueChange = { lectura = it },
                 label = "Lectura",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            if(cuenta.isNotEmpty()){
+                FilledTonalButton(
+                    onClick = { navController.navigate("Agregar")},
+                    border = BorderStroke(1.dp, Color.Cyan),
+                    shape = CircleShape,
+                ) { Text("Agregar fotos") }
+            }
         }
-
-
-
-
-
     }
-
 }
 
 
 
-
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun HomeView(navController: NavController) {
-//    Scaffold(
-//        topBar = {
-//            CenterAlignedTopAppBar(
-//                title = { Text("Cortes", color = MaterialTheme.colorScheme.outline) },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = MaterialTheme.colorScheme.inverseSurface,
-//                    titleContentColor = MaterialTheme.colorScheme.primary
-//                )
-//            )
-//        },
-//        containerColor = MaterialTheme.colorScheme.outline,
-//        floatingActionButton = {
-//            FloatButton {
-//                navController.navigate("Add")
-//            }
-//        },
-//        //content = {Text("Este es el contenido del scaffold", fontSize = 30.sp, modifier = Modifier.padding(it))}
-//        ){
-//        HomeContent(it)
-//    }
-//}
-//
-//@Composable
-//fun HomeContent(values: PaddingValues){
-//
-//Column(
-//    verticalArrangement = Arrangement.Center,
-//    horizontalAlignment = Alignment.CenterHorizontally,
-//){
-//    Spacer(Modifier.padding(top = 70.dp))
-//    //Text("Este es el contenido del column, desde otra funcion", fontSize = 25.sp, modifier = Modifier.padding(top= 60.dp))
-//
-//        Column(
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            modifier = Modifier.padding(15.dp))
-//        {
-////        MainTextField(
-////            value = "", onValueChange = {}, label = "Cuenta", keyboardOptions = KeyboardType.Number)
-//
-//            println("Paso fin2")
-//            MainTitle(title = "Cargar trabajo la recalcada", color = Color.Gray, size = 35.sp)
-//            println("Paso fin3")
-//        }
-//    }
-//}
 
 
